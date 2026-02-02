@@ -511,6 +511,9 @@ nav a.active::after{
         <label>Email Address *</label>
         <input type="email" placeholder="your.email@example.com">
 
+        <label>Upi Id</label>
+        <input id="upiId" type="text" placeholder="example@okaxis etc.">
+        
         <label>Phone Number (Optional)</label>
         <input type="tel" placeholder="+91 9876543210">
 
@@ -580,8 +583,9 @@ nav a.active::after{
   const donateBtn = document.querySelector(".donate-btn");
 
   donateBtn.addEventListener("click", () => {
+    console.log('Donate button clicked!')
     let amount = 0;
-
+    
     // get amount from button text or custom input
     if (customInput.value && customInput.value > 0) {
       amount = customInput.value;
@@ -590,7 +594,7 @@ nav a.active::after{
     }
 
     // Your UPI details
-    const upiId = "envirosafe@upi"; // 🔴 replace with real UPI ID
+    const upiId = document.getElementById("#upiId").innerText; // 🔴 replace with real UPI ID
     const name = "Envirosafe NGO";
     const note = "Donation";
 
