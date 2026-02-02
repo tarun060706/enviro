@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Our Work</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  color: #222;
+}
+
+/* ================= HERO ================= */
+.work-hero {
+  height: 90vh;
+  background: url("hero-forest.jpg") center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 60, 30, 0.65);
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content h1 {
+  font-size: 64px;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+}
+
+/* ================= PROJECTS ================= */
+.projects {
+  padding: 80px 8%;
+  background: #fff;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+}
+
+/* ================= CARD ================= */
+.project-card {
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+}
+
+.project-card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.project-card h3 {
+  font-size: 26px;
+  margin: 20px;
+}
+
+.location {
+  margin: 0 20px;
+  font-size: 14px;
+  color: #777;
+}
+
+.project-card p {
+  font-family: Arial, sans-serif;
+  margin: 15px 20px;
+  line-height: 1.6;
+  color: #555;
+}
+
+/* ================= IMPACT ================= */
+.impact {
+  background: #e7efe9;
+  margin: 20px;
+  padding: 16px;
+  border-radius: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.impact strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #2e5b3c;
+}
+
+/* ================= BADGE ================= */
+.badge {
+  display: inline-block;
+  margin: 0 20px 25px;
+  padding: 6px 14px;
+  background: #fde7df;
+  color: #e07a5f;
+  font-size: 13px;
+  border-radius: 30px;
+  font-family: Arial, sans-serif;
+}
+
+/* ================= ANIMATIONS ================= */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Georgia, serif;
+  color: #2b2b2b;
+}
+
+/* NAV */
+.nav {
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+footer {
+  background: #14532d;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+/* NAV LINK ANIMATION */
+nav a{
+  position: relative;
+  margin: 0 14px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* UNDERLINE EFFECT */
+nav a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #174c2c;
+  transition: width 0.35s ease;
+}
+
+/* HOVER */
+nav a:hover{
+  color: #174c2c;
+}
+nav a:hover::after{
+  width: 100%;
+}
+
+/* ACTIVE PAGE */
+nav a.active{
+  color: #174c2c;
+}
+nav a.active::after{
+  width: 100%;
+}
+
+/* DONATE BUTTON HOVER */
+.nav-container .btn{
+  background:#174c2c;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.4s ease;
+}
+.nav-container .btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* NAVBAR SMOOTH APPEAR */
+.navbar{
+  animation: navFade 0.8s ease;
+}
+@keyframes navFade{
+  from{
+    opacity:0;
+    transform:translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
+</style>
+<body>
+
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      🌿 <span>Envirosafe</span>
+    </div>
+    <nav>
+      <a href="enviro.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="our-work.html">Our Work</a>
+      <a href="donate.html">Donate</a>
+      <a href="transparency.html">Transparency</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <a href="donate.html" class="btn">Donate Now</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="work-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content fade-up">
+    <h1>Our Work</h1>
+    <p>Environmental initiatives creating lasting impact</p>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects">
+  <div class="project-grid">
+
+    <!-- CARD 1 -->
+    <div class="project-card fade-up delay-1">
+      <img src="forest.jpg" alt="">
+      <h3>Urban Forest Restoration</h3>
+      <span class="location">📍 Mumbai, Maharashtra</span>
+      <p>
+        Restoring degraded urban forests and creating green spaces
+        to combat air pollution.
+      </p>
+
+      <div class="impact">
+        <strong>Impact Summary</strong>
+        <span>10,000+ trees planted, 50 hectares restored</span>
+      </div>
+
+      <span class="badge">Active Project</span>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="project-card fade-up delay-2">
+      <img src="water.jpg" alt="">
+      <h3>Clean Water Initiative</h3>
+      <span class="location">📍 Kerala</span>
+      <p>
+        Implementing sustainable water management systems
+        for rural communities.
+      </p>
+
+      <div class="impact">
+        <strong>Impact Summary</strong>
+        <span>25 villages benefited, 5,000+ people served</span>
+      </div>
+
+      <span class="badge">Active Project</span>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="project-card fade-up delay-3">
+      <img src="waste.jpg" alt="">
+      <h3>Waste Management Program</h3>
+      <span class="location">📍 Pune, Maharashtra</span>
+      <p>
+        Community-based waste segregation and recycling
+        programs.
+      </p>
+
+      <div class="impact">
+        <strong>Impact Summary</strong>
+        <span>500 tons waste diverted, 100 families trained</span>
+      </div>
+
+      <span class="badge">Active Project</span>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Envirosafe NGO. All rights reserved.</p>
+</footer>
+</body>
+</html>
