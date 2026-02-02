@@ -497,7 +497,7 @@ nav a.active::after{
           <button class="amount">₹5000</button>
         </div>
 
-        <input type="number" placeholder="Enter custom amount">
+        <input id="customInput" type="number" placeholder="Enter custom amount">
 
         <!-- Impact Message -->
         <div class="impact-msg">
@@ -586,6 +586,9 @@ nav a.active::after{
     console.log('Donate button clicked!')
     let amount = 0;
     
+    const customInput = document.getElementById("customInput");
+
+    console.log(customInput.value);
     // get amount from button text or custom input
     if (customInput.value && customInput.value > 0) {
       amount = customInput.value;
@@ -595,6 +598,7 @@ nav a.active::after{
 
     // Your UPI details
     const upiId = document.getElementById("#upiId").innerText; // 🔴 replace with real UPI ID
+    console.log(upiId)
     const name = "Envirosafe NGO";
     const note = "Donation";
 
