@@ -9,7 +9,11 @@ import Donor from "./models/Donor.js";
 configDotenv();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
 app.use(express.json());
 
 // Razorpay instance
@@ -77,8 +81,8 @@ const PORT = process.env.PORT || 5000;
 async function start() {
   try {
     await connectDb(); // ✅ connect MongoDB first
-    app.listen(PORT, () => {
-      console.log("🚀 Server running on http://localhost:" + PORT);
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log("🚀 Server running on http://0.0.0.0:" + PORT);
     });
   } catch (err) {
     console.error("❌ Server failed to start:", err);
