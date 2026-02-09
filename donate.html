@@ -645,67 +645,51 @@ function updateUI() {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-document.getElementById("donateBtn").addEventListener("click", async () => {
+document.getElementById("donateBtn").onclick = function () {
 
-  const amount = selectedAmount; // ya dynamic amount
-  const name = document.getElementById("donorName").value;
-  const email = document.getElementById("donorEmail").value;
-  const phone = document.getElementById("donorPhone").value;
+  const amount = selectedAmount;
 
-  console.log(amount, phone, name, email)
-
-  const res = await fetch("http://192.168.43.14:5000/create-order", {
+  fetch("http://192.168.43.14:5000/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount, name, email, phone })
-  });
+    body: JSON.stringify({ amount })
+  })
+  .then(res => res.json())
+  .then(data => {
 
-  const data = await res.json();
-
-  if (!data.success) {
-    alert("Order creation failed");
-    return;
-  }
-
-  console.log(data.order);
-
-  const options = {
-    key:'rzp_test_SDEAHYaaqboAmU', // only key_id (NOT secret)
-    amount: data.order.amount,
-    currency: "INR",
-    name: "Your NGO Name",
-    description: "Donation",
-    order_id: data.order.id,
-
-    // 🔥 THIS IS WHAT ENABLES UPI
-    method: {
-      upi: true,
-      card: true,
-      netbanking: true,
-      wallet: true
-    },
-
-    // Optional but recommended
-    prefill: {
-      name: "Donor",
-      email: "donor@example.com",
-      contact: "9999999999"
-    },
-
-    theme: {
-      color: "#2ecc71"
-    },    
-    
-    handler: function (response) {
-      alert("Payment Successful 🎉");
-      console.log(response);
+    if (!data.success) {
+      alert("Order creation failed");
+      return;
     }
 
-  }
-  const rzp = new Razorpay(options);
-  rzp.open();
-});
+    const options = {
+      key: "rzp_test_SDEAHYaaqboAmU",
+      amount: data.order.amount,
+      currency: "INR",
+      order_id: data.order.id,
+      name: "Your NGO Name",
+      description: "Donation",
+      method: {
+        card: true,
+        netbanking: true,
+        wallet: true,
+        upi: true
+      },
+      handler: function () {
+        alert("Payment Successful 🎉");
+      }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open(); // ✅ mobile allows now
+  })
+  .catch(err => {
+    alert("Network error");
+    console.error(err);
+  });
+};
 </script>
+
 
 
 </body>
