@@ -135,7 +135,13 @@ nav a.active::after{
 
 .btn.outline {
   background: transparent;
-  color: #22c55e;
+  color: #e9ebea;
+  border: 2px solid #22c55e;
+}
+
+.btn.outline:hover {
+  background: #22c55e;
+  color: #e9ebea;
   border: 2px solid #22c55e;
 }
 

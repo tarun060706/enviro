@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Donators</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      /* padding: 40px; */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2e7d32;
+    }
+
+    #container1 {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .donor-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 6px solid #43a047;
+    }
+
+    .donor-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .donor-card p {
+      margin: 6px 0;
+      color: #444;
+      font-size: 15px;
+    }
+
+    .donor-card strong {
+      color: #2e7d32;
+    }
+
+    .amount {
+      margin-top: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1b5e20;
+    }
+
+    .loading,
+    .error {
+      text-align: center;
+      font-size: 18px;
+      color: #555;
+    }
+
+    .navbar {
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  z-index: 100;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+nav a {
+  margin: 0 12px;
+  text-decoration: none;
+  color: #555;
+}
+
+nav a:hover {
+  color: #000;
+}
+
+.btn {
+  background: #22c55e;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* NAV LINK ANIMATION */
+nav a{
+  position: relative;
+  margin: 0 14px;
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* UNDERLINE EFFECT */
+nav a::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0%;
+  height: 2px;
+  background: #174c2c;
+  transition: width 0.35s ease;
+}
+
+/* HOVER */
+nav a:hover{
+  color: #174c2c;
+}
+nav a:hover::after{
+  width: 100%;
+}
+
+/* ACTIVE PAGE */
+nav a.active{
+  color: #174c2c;
+}
+nav a.active::after{
+  width: 100%;
+}
+
+/* DONATE BUTTON HOVER */
+.nav-container .btn{
+  background:#174c2c;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.4s ease;
+}
+.nav-container .btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* NAVBAR SMOOTH APPEAR */
+.navbar{
+  animation: navFade 0.8s ease;
+}
+@keyframes navFade{
+  from{
+    opacity:0;
+    transform:translateY(-20px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+<header class="navbar">
+  <div class="nav-container">
+    <div class="logo">
+      🌿 <span>Envirosafe</span>
+    </div>
+    <nav>
+      <a href="index.html" >Home</a>
+      <a href="about.html">About</a>
+      <a href="our-work.html">Our Work</a>
+      <a href="donate.html">Donate</a>
+      <a href="contact.html">Contact</a>
+      <a href="donator.html">Donator's</a>
+    </nav>
+    <a href="donate.html" class="btn">Donate Now</a>
+  </div>
+</header>
+
+
+  <h1>❤️ Our Generous Donators</h1>
+  <div id="container1" class="loading">Loading donors...</div>
+
+  <script>
+
+    function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    const dd = String(date.getDate()).padStart(2, "0");
+    const mm = String(date.getMonth() + 1).padStart(2, "0");
+    const yy = String(date.getFullYear()).slice(-2);
+
+    return `${dd}/${mm}/${yy}`;
+    }
+
+    (async function getDonors() {
+      const container = document.getElementById("container1");
+
+      try {
+        const response = await fetch("http://localhost:5000/donors");
+        const parsedResponse = await response.json();
+
+        const donorsList = parsedResponse.result;
+
+        container.classList.remove("loading");
+
+        container.innerHTML = donorsList.map((val) => {
+          return `
+            <div class="donor-card">
+              <p><strong>Name:</strong> ${val.name}</p>
+              <p><strong>Email:</strong> ${val.email}</p>
+              <p><strong>Phone:</strong> ${val.phone}</p>
+              <p class="amount">₹ ${val.amount}</p>
+              <p class="amount"><strong style="margin-right:10px">Donated on Date:</strong> ${formatDate(val.createdAt)}</p>
+            </div>
+          `;
+        }).join("");
+
+      } catch (error) {
+        container.innerHTML = "<p class='error'> Failed to load donors</p>";
+        console.error(error);
+      }
+    })();
+  </script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Donate</title>
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 
   <style>
     * {
@@ -448,8 +448,8 @@ nav a.active::after{
       <a href="about.html">About</a>
       <a href="our-work.html">Our Work</a>
       <a href="donate.html">Donate</a>
-      <a href="transparency.html">Transparency</a>
       <a href="contact.html">Contact</a>
+      <a href="donator.html">Donator's</a>
     </nav>
     <a href="donate.html" class="btn">Donate Now</a>
   </div>
@@ -508,18 +508,18 @@ nav a.active::after{
 
         <!-- Inputs -->
         <label>Full Name *</label>
-        <input type="text" placeholder="Enter your full name">
+        <input id="donorName"  type="text" placeholder="Enter your full name">
 
         <label>Email Address *</label>
-        <input type="email" placeholder="your.email@example.com">
+        <input id="donorEmail" type="email" placeholder="your.email@example.com">
 
         <label>Upi Id</label>
-        <input id="upiId" type="text" placeholder="example@okaxis etc.">
+        <input id="donorUpiId" type="text" placeholder="example@okaxis etc.">
         
         <label>Phone Number (Optional)</label>
-        <input type="tel" placeholder="+91 9876543210">
+        <input id="donorPhone" type="tel" placeholder="+91 9876543210">
 
-        <button class="donate-btn">Donate ₹1000</button>
+        <button class="donate-btn" id="donateBtn">Donate ₹1000</button>
 
         <p class="secure">
           Your donation is secure and processed via Razorpay.
@@ -582,80 +582,134 @@ nav a.active::after{
 </footer>
 
 <script>
-    const RAZORPAY_KEY = "rzp_test_xxxxxxxxxx";   // 🔴 apni key
-    const NGO_UPI_ID = "ngo@okaxis";              // 🔴 NGO ka UPI
-    const NGO_NAME = "Envirosafe NGO";
+let selectedAmount = 1000;
 
+const amountBtns = document.querySelectorAll(".amount");
+const customInput = document.getElementById("customInput");
+const donateBtn = document.getElementById("donateBtn");
+const impactMsg = document.querySelector(".impact-msg");
+const toggleBtns = document.querySelectorAll(".toggle button");
 
-  const toggleButtons = document.querySelectorAll('.toggle button');
-  const amountButtons = document.querySelectorAll('.amount');
-  const customInput = document.getElementById('customInput');
-  const donateBtn = document.querySelector('.donate-btn');
+/* ---------- AMOUNT BUTTON CLICK ---------- */
+amountBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    amountBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
 
-  let selectedAmount = 1000;
-  let donationType = "One-Time";
+    selectedAmount = parseInt(btn.innerText.replace("₹",""));
+    customInput.value = "";
 
-  // toggle
-  toggleButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      donationType = btn.innerText;
-    });
+    updateUI();
   });
+});
 
-  // preset amounts
-  amountButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      amountButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+/* ---------- CUSTOM AMOUNT ---------- */
+customInput.addEventListener("input", () => {
+  amountBtns.forEach(b => b.classList.remove("active"));
+  selectedAmount = parseInt(customInput.value || 0);
+  updateUI();
+});
 
-      selectedAmount = parseInt(btn.innerText.replace('₹',''));
-      customInput.value = '';
-      updateDonateText();
-    });
+/* ---------- TOGGLE ONE-TIME / MONTHLY ---------- */
+toggleBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    toggleBtns.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
   });
+});
 
-  // custom amount
-  customInput.addEventListener('input', () => {
-    amountButtons.forEach(b => b.classList.remove('active'));
-    if (customInput.value > 0) {
-      selectedAmount = parseInt(customInput.value);
-      updateDonateText();
-    }
-  });
-
-  function updateDonateText() {
-    donateBtn.innerText = `Donate ₹${selectedAmount}`;
+/* ---------- UI UPDATE ---------- */
+function updateUI() {
+  if (!selectedAmount || selectedAmount < 1) {
+    donateBtn.innerText = "Donate";
+    impactMsg.innerHTML = "❤️ Every contribution matters";
+    return;
   }
 
-  // 🔥 DIRECT UPI OPEN
-  donateBtn.addEventListener('click', () => {
-    const options = {
-      key: "rzp_test_xxxxxxxxxx", // Razorpay Key
-      amount: selectedAmount * 100,
-      currency: "INR",
-      name: "Envirosafe NGO",
-      description: donationType + " Donation",
-      method: {
-        upi: true
-      },
-      upi: {
-        vpa: "ngo@okaxis" // NGO UPI ID
-      },
-      handler: function (response) {
-        alert("Donation Successful ❤️\nPayment ID: " + response.razorpay_payment_id);
-      },
-      theme: {
-        color: "#174c2c"
-      }
-    };
+  donateBtn.innerText = `Donate ₹${selectedAmount}`;
 
-    const rzp = new Razorpay(options);
-    rzp.open();
-  });
+  // Impact logic (screen recording style)
+  if (selectedAmount >= 5000) {
+    impactMsg.innerHTML = "❤️ Plants 100 trees & supports 5 families";
+  } else if (selectedAmount >= 2500) {
+    impactMsg.innerHTML = "❤️ Plants 50 trees & supports 2 families";
+  } else if (selectedAmount >= 1000) {
+    impactMsg.innerHTML = "❤️ Plants 20 trees & supports 1 family";
+  } else {
+    impactMsg.innerHTML = "❤️ Helps plant trees";
+  }
+}
 </script>
 
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+document.getElementById("donateBtn").addEventListener("click", async () => {
+
+  const amount = selectedAmount; // ya dynamic amount
+  const name = document.getElementById("donorName").value;
+  const email = document.getElementById("donorEmail").value;
+  const phone = document.getElementById("donorPhone").value;
+
+  console.log(amount, phone, name, email)
+
+  const res = await fetch("http://localhost:5000/create-order", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ amount, name, email, phone })
+  });
+
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Order creation failed");
+    return;
+  }
+
+  console.log(data.order);
+
+  const options = {
+    key:'rzp_test_SDEAHYaaqboAmU', // only key_id (NOT secret)
+    amount: data.order.amount,
+    currency: "INR",
+    name: "Your NGO Name",
+    description: "Donation",
+    order_id: data.order.id,
+
+    // 🔥 THIS IS WHAT ENABLES UPI
+    method: {
+      upi: true,
+      card: true,
+      netbanking: true,
+      wallet: true
+    },
+
+    // Optional but recommended
+    prefill: {
+      name: "Donor",
+      email: "donor@example.com",
+      contact: "9999999999"
+    },
+
+    theme: {
+      color: "#2ecc71"
+    },    
+    
+    handler: function (response) {
+      alert("Payment Successful 🎉");
+      console.log(response);
+    }
+
+  }
+  const rzp = new Razorpay(options);
+  rzp.open();
+});
+</script>
+
+
+</body>
+</html>
 
 </body>
 </html>

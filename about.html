@@ -26,15 +26,16 @@ body {
 /* HERO */
 .about-hero {
   height: 70vh;
-  background: url("https://images.unsplash.com/photo-1520975922284-7b9589c6c6c4")
-    center/cover no-repeat;
+  /* background: url("https://images.unsplash.com/photo-1520975922284-7b9589c6c6c4")
+    center/cover no-repeat; */
+    background-size: cover;
   position: relative;
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(20, 80, 50, 0.6);
+  /* background: rgba(20, 80, 50, 0.6); */
 }
 
 .hero-text {
@@ -331,15 +332,15 @@ nav a.active::after{
       <a href="about.html">About</a>
       <a href="our-work.html">Our Work</a>
       <a href="donate.html">Donate</a>
-      <a href="transparency.html">Transparency</a>
       <a href="contact.html">Contact</a>
+      <a href="donator.html">Donator's</a>
     </nav>
     <a href="donate.html" class="btn">Donate Now</a>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="about-hero">
+<section class="about-hero" style="background-image: url(about.jpeg);">
   <div class="overlay"></div>
   <div class="hero-text fade-up">
     <h1>About Envirosafe</h1>
