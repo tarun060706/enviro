@@ -645,51 +645,80 @@ function updateUI() {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
-document.getElementById("donateBtn").onclick = function () {
+document.getElementById("donateBtn").addEventListener("click", async () => {
 
-  const amount = selectedAmount;
+  const amount = selectedAmount; // ya dynamic amount
+  const name = document.getElementById("donorName").value;
+  const email = document.getElementById("donorEmail").value;
+  const phone = document.getElementById("donorPhone").value;
 
-  fetch("http://192.168.43.14:5000/create-order", {
+  console.log(amount, phone, name, email)
+
+  const res = await fetch("/api/create-order", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount:selectedAmount })
-  })
-  .then(res => res.json())
-  .then(data => {
+    body: JSON.stringify({ amount, name, email, phone })
+  });
 
-    if (!data.success) {
-      alert("Order creation failed");
-      return;
+  const data = await res.json();
+
+  if (!data.success) {
+    alert("Order creation failed");
+    return;
+  }
+
+  console.log(data.order);
+
+  const options = {
+    key: data.key, // only key_id (NOT secret)
+    amount: data.order.amount,
+    currency: "INR",
+    name: "Your NGO Name",
+    description: "Donation",
+    order_id: data.order.id,
+
+    // 🔥 THIS IS WHAT ENABLES UPI
+    method: {
+      upi: true,
+      card: true,
+      netbanking: true,
+      wallet: true
+    },
+
+    // Optional but recommended
+    prefill: {
+      name: name || "Donor",
+      email: email || "donor@example.com",
+      contact: phone || ""
+    },
+
+    theme: {
+      color: "#2ecc71"
+    },    
+    
+    handler: async function (response) {
+      const verifyRes = await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(response)
+      });
+
+      const verifyData = await verifyRes.json();
+
+      if (!verifyData.success) {
+        alert("Payment verification failed");
+        return;
+      }
+
+      alert("Payment Successful 🎉");
+      console.log(response);
     }
 
-    const options = {
-      key: "rzp_test_SDEAHYaaqboAmU",
-      amount: data.order.amount,
-      currency: "INR",
-      order_id: data.order.id,
-      name: "Your NGO Name",
-      description: "Donation",
-      method: {
-        card: true,
-        netbanking: true,
-        wallet: true,
-        upi: true
-      },
-      handler: function () {
-        alert("Payment Successful 🎉");
-      }
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open(); // ✅ mobile allows now
-  })
-  .catch(err => {
-    alert("Network error");
-    console.error(err);
-  });
-};
+  }
+  const rzp = new Razorpay(options);
+  rzp.open();
+});
 </script>
-
 
 
 </body>

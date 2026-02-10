@@ -1,0 +1,9 @@
+{
+  "name": "envirosafe-vercel",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "mongoose": "^9.1.6",
+    "razorpay": "^2.9.2"
+  }
+}

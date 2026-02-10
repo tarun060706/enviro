@@ -8,6 +8,10 @@ const donorSchema = new mongoose.Schema({
   amount: Number,
   paymentId: String,
   orderId: String,
+  status: {
+    type: String,
+    default: "created"
+  },
   createdAt: {
     type: Date,
     default: Date.now
