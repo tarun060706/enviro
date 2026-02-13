@@ -116,13 +116,10 @@ app.get("/donors", async (req, res) => {
   try {
     const result = await Donor.find({});
 
-    if (!result || result.length === 0) {
-      return res.status(200).send("<h1>No donators found!</h1>");
-    }
-
     return res.status(200).json({
+      success: true,
       message: "Donors fetch success",
-      result
+      result: result || []
     });
   } catch (error) {
     res.status(500).send("<h1>Error fetching data, Try again later.</h1>");

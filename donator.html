@@ -205,20 +205,28 @@ nav a.active::after{
   <script>
 
     function formatDate(dateString) {
-    const date = new Date(dateString);
+      const date = new Date(dateString);
+      if (Number.isNaN(date.getTime())) return "N/A";
 
-    const dd = String(date.getDate()).padStart(2, "0");
-    const mm = String(date.getMonth() + 1).padStart(2, "0");
-    const yy = String(date.getFullYear()).slice(-2);
+      const dd = String(date.getDate()).padStart(2, "0");
+      const mm = String(date.getMonth() + 1).padStart(2, "0");
+      const yy = String(date.getFullYear()).slice(-2);
 
-    return `${dd}/${mm}/${yy}`;
+      return `${dd}/${mm}/${yy}`;
     }
+
+    const API_BASE =
+      location.hostname === "localhost" ||
+      location.hostname === "127.0.0.1" ||
+      location.hostname === ""
+        ? "http://localhost:5000"
+        : "";
 
     (async function getDonors() {
       const container = document.getElementById("container1");
 
       try {
-        const response = await fetch("http://localhost:5000/donors");
+        const response = await fetch(`${API_BASE}/donors`);
         const parsedResponse = await response.json();
 
         const donorsList = parsedResponse.result;
