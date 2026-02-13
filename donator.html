@@ -220,7 +220,7 @@ nav a.active::after{
       location.hostname === "127.0.0.1" ||
       location.hostname === ""
         ? "http://localhost:5000"
-        : "";
+        : "/api";
 
     (async function getDonors() {
       const container = document.getElementById("container1");
@@ -229,9 +229,20 @@ nav a.active::after{
         const response = await fetch(`${API_BASE}/donors`);
         const parsedResponse = await response.json();
 
-        const donorsList = parsedResponse.result;
+        if (!response.ok) {
+          throw new Error(parsedResponse.message || "Failed to load donors");
+        }
+
+        const donorsList = Array.isArray(parsedResponse.result)
+          ? parsedResponse.result
+          : [];
 
         container.classList.remove("loading");
+
+        if (donorsList.length === 0) {
+          container.innerHTML = "<p class='error'>No donors found yet.</p>";
+          return;
+        }
 
         container.innerHTML = donorsList.map((val) => {
           return `
