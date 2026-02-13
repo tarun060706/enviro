@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -441,7 +441,7 @@ nav a.active::after{
     <header class="navbar">
   <div class="nav-container">
     <div class="logo">
-      🌿 <span>Envirosafe</span>
+      ðŸŒ¿ <span>Envirosafe</span>
     </div>
     <nav>
       <a href="index.html" >Home</a>
@@ -491,19 +491,19 @@ nav a.active::after{
         </div>
 
         <!-- Amount -->
-        <label>Select Amount (₹)</label>
+        <label>Select Amount (â‚¹)</label>
         <div class="amounts">
-          <button class="amount">₹500</button>
-          <button class="amount active">₹1000</button>
-          <button class="amount">₹2500</button>
-          <button class="amount">₹5000</button>
+          <button class="amount">â‚¹500</button>
+          <button class="amount active">â‚¹1000</button>
+          <button class="amount">â‚¹2500</button>
+          <button class="amount">â‚¹5000</button>
         </div>
 
         <input id="customInput" type="number" placeholder="Enter custom amount">
 
         <!-- Impact Message -->
         <div class="impact-msg">
-          ❤️ Plants 20 trees & supports 1 family
+          â¤ï¸ Plants 20 trees & supports 1 family
         </div>
 
         <!-- Inputs -->
@@ -519,7 +519,7 @@ nav a.active::after{
         <label>Phone Number (Optional)</label>
         <input id="donorPhone" type="tel" placeholder="+91 9876543210">
 
-        <button class="donate-btn" id="donateBtn">Donate ₹1000</button>
+        <button class="donate-btn" id="donateBtn">Donate â‚¹1000</button>
 
         <p class="secure">
           Your donation is secure and processed via Razorpay.
@@ -541,7 +541,7 @@ nav a.active::after{
 
       <div class="donation-card">
         <div class="icon green">
-          ✓
+          âœ“
         </div>
         <h3>100% Transparent</h3>
         <p>
@@ -552,7 +552,7 @@ nav a.active::after{
 
       <div class="donation-card">
         <div class="icon orange">
-          ✓
+          âœ“
         </div>
         <h3>Direct Impact</h3>
         <p>
@@ -563,7 +563,7 @@ nav a.active::after{
 
       <div class="donation-card">
         <div class="icon green">
-          ✓
+          âœ“
         </div>
         <h3>Tax Benefits</h3>
         <p>
@@ -578,7 +578,7 @@ nav a.active::after{
 </section>
 
 <footer>
-  <p>© 2025 Envirosafe NGO. All rights reserved.</p>
+  <p>Â© 2025 Envirosafe NGO. All rights reserved.</p>
 </footer>
 
 <script>
@@ -596,7 +596,7 @@ amountBtns.forEach(btn => {
     amountBtns.forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
 
-    selectedAmount = parseInt(btn.innerText.replace("₹",""));
+    selectedAmount = parseInt(btn.innerText.replace("â‚¹",""));
     customInput.value = "";
 
     updateUI();
@@ -622,21 +622,21 @@ toggleBtns.forEach(btn => {
 function updateUI() {
   if (!selectedAmount || selectedAmount < 1) {
     donateBtn.innerText = "Donate";
-    impactMsg.innerHTML = "❤️ Every contribution matters";
+    impactMsg.innerHTML = "â¤ï¸ Every contribution matters";
     return;
   }
 
-  donateBtn.innerText = `Donate ₹${selectedAmount}`;
+  donateBtn.innerText = `Donate â‚¹${selectedAmount}`;
 
   // Impact logic (screen recording style)
   if (selectedAmount >= 5000) {
-    impactMsg.innerHTML = "❤️ Plants 100 trees & supports 5 families";
+    impactMsg.innerHTML = "â¤ï¸ Plants 100 trees & supports 5 families";
   } else if (selectedAmount >= 2500) {
-    impactMsg.innerHTML = "❤️ Plants 50 trees & supports 2 families";
+    impactMsg.innerHTML = "â¤ï¸ Plants 50 trees & supports 2 families";
   } else if (selectedAmount >= 1000) {
-    impactMsg.innerHTML = "❤️ Plants 20 trees & supports 1 family";
+    impactMsg.innerHTML = "â¤ï¸ Plants 20 trees & supports 1 family";
   } else {
-    impactMsg.innerHTML = "❤️ Helps plant trees";
+    impactMsg.innerHTML = "â¤ï¸ Helps plant trees";
   }
 }
 </script>
@@ -650,7 +650,7 @@ const isLocalHost =
   location.hostname === "127.0.0.1" ||
   location.hostname === "";
 
-const API_BASE = isLocalHost ? "http://localhost:5000" : "";
+const API_BASE = isLocalHost ? "http://localhost:5000" : "/api";
 
 document.getElementById("donateBtn").addEventListener("click", async () => {
 
@@ -695,7 +695,7 @@ document.getElementById("donateBtn").addEventListener("click", async () => {
     description: "Donation",
     order_id: data.order.id,
 
-    // 🔥 THIS IS WHAT ENABLES UPI
+    // ðŸ”¥ THIS IS WHAT ENABLES UPI
     method: {
       upi: true,
       card: true,
@@ -739,7 +739,7 @@ document.getElementById("donateBtn").addEventListener("click", async () => {
         return;
       }
 
-      alert("Payment Successful 🎉");
+      alert("Payment Successful ðŸŽ‰");
       console.log(response);
     }
 
@@ -755,3 +755,4 @@ document.getElementById("donateBtn").addEventListener("click", async () => {
 
 </body>
 </html>
+
