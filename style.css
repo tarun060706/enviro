@@ -125,6 +125,7 @@ nav a.active::after{
   color: var(--green-dark);
   padding: 6px 10px;
   border-radius: 10px;
+  order: -1;
 }
 
 .nav-toggle:focus-visible {
@@ -351,10 +352,10 @@ footer {
 @media (max-width: 768px) {
   .nav-container {
     padding: 12px 16px;
+    flex-wrap: nowrap;
   }
   .nav-toggle {
     display: inline-flex;
-    order: 2;
   }
   nav {
     display: none;
@@ -369,6 +370,13 @@ footer {
   }
   .nav-container .btn {
     order: 3;
+  }
+  .logo {
+    order: 2;
+    margin: 0 auto;
+  }
+  .nav-container {
+    justify-content: space-between;
   }
   nav a {
     margin: 0 8px;
@@ -389,6 +397,15 @@ footer {
   .btn.big {
     padding: 12px 24px;
     font-size: 16px;
+  }
+  .hero-content .btn {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto 12px;
+  }
+  .hero-content .btn + .btn {
+    margin-top: 8px;
   }
   .impact {
     padding: 60px 16px;

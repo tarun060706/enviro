@@ -188,6 +188,7 @@ nav a.active::after{
       color: #174c2c;
       padding: 6px 10px;
       border-radius: 10px;
+      order: -1;
     }
 
     .nav-toggle:focus-visible {
@@ -234,7 +235,6 @@ nav a.active::after{
   @media (max-width: 768px) {
     .nav-toggle {
       display: inline-flex;
-      order: 2;
     }
     nav {
       display: none;
@@ -249,6 +249,13 @@ nav a.active::after{
     }
     .nav-container .btn {
       order: 3;
+    }
+    .nav-container {
+      flex-wrap: nowrap;
+    }
+    .logo {
+      order: 2;
+      margin: 0 auto;
     }
   }
   </style>

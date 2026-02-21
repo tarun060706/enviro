@@ -217,12 +217,14 @@ nav a::after{
   transition: width 0.35s ease;
 }
 
-/* HOVER */
-nav a:hover{
-  color: #174c2c;
-}
-nav a:hover::after{
-  width: 100%;
+/* HOVER (only on devices that support hover) */
+@media (hover: hover) {
+  nav a:hover{
+    color: #174c2c;
+  }
+  nav a:hover::after{
+    width: 100%;
+  }
 }
 
 /* ACTIVE PAGE */
@@ -281,6 +283,7 @@ footer {
   color: #174c2c;
   padding: 6px 10px;
   border-radius: 10px;
+  order: -1;
 }
 
 .nav-toggle:focus-visible {
@@ -323,7 +326,6 @@ footer {
   }
   .nav-toggle {
     display: inline-flex;
-    order: 2;
   }
   nav {
     display: none;
@@ -338,6 +340,13 @@ footer {
   }
   .nav-container .btn {
     order: 3;
+  }
+  .nav-container {
+    flex-wrap: nowrap;
+  }
+  .logo {
+    order: 2;
+    margin: 0 auto;
   }
 }
 
