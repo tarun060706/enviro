@@ -58,8 +58,10 @@ nav a {
   color: #555;
 }
 
-nav a:hover {
-  color: #000;
+@media (hover: hover) {
+  nav a:hover {
+    color: #000;
+  }
 }
 
 /* NAV LINK ANIMATION */
@@ -70,6 +72,8 @@ nav a{
   color: #3b4a42;
   font-weight: 500;
   transition: color 0.3s ease;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* UNDERLINE EFFECT */
@@ -85,11 +89,22 @@ nav a::after{
 }
 
 /* HOVER */
-nav a:hover{
-  color: var(--green);
+@media (hover: hover) {
+  nav a:hover{
+    color: var(--green);
+  }
+  nav a:hover::after{
+    width: 100%;
+  }
 }
-nav a:hover::after{
-  width: 100%;
+
+@media (hover: none) {
+  nav a:hover {
+    color: inherit;
+  }
+  nav a:hover::after {
+    width: 0;
+  }
 }
 
 /* ACTIVE PAGE */
@@ -125,12 +140,30 @@ nav a.active::after{
   color: var(--green-dark);
   padding: 6px 10px;
   border-radius: 10px;
-  order: -1;
+  margin-left: auto;
 }
 
 .nav-toggle:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: 3px;
+}
+
+.nav-toggle:active,
+.nav-toggle:focus {
+  background: transparent;
+}
+
+.nav-cta {
+  display: none;
+  margin-top: 12px;
+  width: 100%;
+  text-align: center;
+  background: #e68362;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 /* NAVBAR SMOOTH APPEAR */
@@ -353,6 +386,8 @@ footer {
   .nav-container {
     padding: 12px 16px;
     flex-wrap: nowrap;
+    position: relative;
+    justify-content: space-between;
   }
   .nav-toggle {
     display: inline-flex;
@@ -360,23 +395,35 @@ footer {
   nav {
     display: none;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     order: 4;
     width: 100%;
-    padding-top: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    border-radius: 0 0 16px 16px;
+    padding: 16px 20px 20px;
+  }
+  nav a {
+    padding: 8px 0;
+    background: transparent;
+    width: 100%;
+  }
+  nav a:active,
+  nav a:focus {
+    background: transparent;
   }
   .nav-container.nav-open nav {
     display: flex;
   }
   .nav-container .btn {
-    order: 3;
+    display: none;
   }
-  .logo {
-    order: 2;
-    margin: 0 auto;
-  }
-  .nav-container {
-    justify-content: space-between;
+  .nav-cta {
+    display: inline-block;
   }
   nav a {
     margin: 0 8px;

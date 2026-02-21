@@ -191,8 +191,10 @@ nav a {
   color: #555;
 }
 
-nav a:hover {
-  color: #000;
+@media (hover: hover) {
+  nav a:hover {
+    color: #000;
+  }
 }
 
 /* NAV LINK ANIMATION */
@@ -203,6 +205,8 @@ nav a{
   color: #555;
   font-weight: 500;
   transition: color 0.3s ease;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* UNDERLINE EFFECT */
@@ -224,6 +228,15 @@ nav a::after{
   }
   nav a:hover::after{
     width: 100%;
+  }
+}
+
+@media (hover: none) {
+  nav a:hover {
+    color: inherit;
+  }
+  nav a:hover::after {
+    width: 0;
   }
 }
 
@@ -283,12 +296,30 @@ footer {
   color: #174c2c;
   padding: 6px 10px;
   border-radius: 10px;
-  order: -1;
+  margin-left: auto;
 }
 
 .nav-toggle:focus-visible {
   outline: 2px solid #22c55e;
   outline-offset: 3px;
+}
+
+.nav-toggle:active,
+.nav-toggle:focus {
+  background: transparent;
+}
+
+.nav-cta {
+  display: none;
+  margin-top: 12px;
+  width: 100%;
+  text-align: center;
+  background: #e68362;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .form iframe {
@@ -330,10 +361,27 @@ footer {
   nav {
     display: none;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     order: 4;
     width: 100%;
     padding-top: 10px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    border-radius: 0 0 16px 16px;
+    padding: 16px 20px 20px;
+  }
+  nav a {
+    padding: 8px 0;
+    background: transparent;
+    width: 100%;
+  }
+  nav a:active,
+  nav a:focus {
+    background: transparent;
   }
   .nav-container.nav-open nav {
     display: flex;
@@ -343,10 +391,16 @@ footer {
   }
   .nav-container {
     flex-wrap: nowrap;
+    position: relative;
   }
-  .logo {
-    order: 2;
-    margin: 0 auto;
+  .nav-container {
+    justify-content: space-between;
+  }
+  .nav-container .btn {
+    display: none;
+  }
+  .nav-cta {
+    display: inline-block;
   }
 }
 
@@ -377,10 +431,10 @@ footer {
 
     <header class="navbar">
   <div class="nav-container">
-    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <div class="logo">
       🌿 <span>Envirosafe</span>
     </div>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <nav>
       <a href="index.html" >Home</a>
       <a href="about.html">About</a>
@@ -388,6 +442,7 @@ footer {
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
       <a href="donator.html">Donator's</a>
+      <a href="donate.html" class="nav-cta">Donate Now</a>
     </nav>
     <a href="donate.html" class="btn">Donate Now</a>
   </div>
@@ -489,10 +544,15 @@ footer {
   const navToggle = document.querySelector(".nav-toggle");
   const navLinks = document.querySelectorAll("nav a");
 
+  const setToggleIcon = (isOpen) => {
+    navToggle.innerHTML = isOpen ? "&times;" : "&#9776;";
+  };
+
   if (navToggle && navContainer) {
     navToggle.addEventListener("click", () => {
       const isOpen = navContainer.classList.toggle("nav-open");
       navToggle.setAttribute("aria-expanded", String(isOpen));
+      setToggleIcon(isOpen);
     });
   }
 
@@ -500,6 +560,7 @@ footer {
     link.addEventListener("click", () => {
       navContainer.classList.remove("nav-open");
       navToggle.setAttribute("aria-expanded", "false");
+      setToggleIcon(false);
     });
   });
 </script>

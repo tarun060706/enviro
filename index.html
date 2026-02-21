@@ -15,10 +15,10 @@
 <!-- NAVBAR -->
 <header class="navbar">
   <div class="nav-container">
-    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <div class="logo">
       🌿 <span>Envirosafe</span>
     </div>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <nav>
       <a href="index.html" >Home</a>
       <a href="about.html">About</a>
@@ -26,6 +26,7 @@
       <a href="donate.html">Donate</a>
       <a href="contact.html">Contact</a>
       <a href="donator.html">Donator's</a>
+      <a href="donate.html" class="nav-cta">Donate Now</a>
     </nav>
     <a href="donate.html" class="btn">Donate Now</a>
   </div>
@@ -92,10 +93,15 @@
   const navToggle = document.querySelector(".nav-toggle");
   const navLinks = document.querySelectorAll("nav a");
 
+  const setToggleIcon = (isOpen) => {
+    navToggle.innerHTML = isOpen ? "&times;" : "&#9776;";
+  };
+
   if (navToggle && navContainer) {
     navToggle.addEventListener("click", () => {
       const isOpen = navContainer.classList.toggle("nav-open");
       navToggle.setAttribute("aria-expanded", String(isOpen));
+      setToggleIcon(isOpen);
     });
   }
 
@@ -103,6 +109,7 @@
     link.addEventListener("click", () => {
       navContainer.classList.remove("nav-open");
       navToggle.setAttribute("aria-expanded", "false");
+      setToggleIcon(false);
     });
   });
 </script>
