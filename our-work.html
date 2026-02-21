@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Work</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -169,6 +170,34 @@ footer {
   padding: 20px;
 }
 
+.nav-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.nav-toggle {
+  display: none;
+  border: 0;
+  background: transparent;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  color: #174c2c;
+  padding: 6px 10px;
+  border-radius: 10px;
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 3px;
+}
+
 /* NAV LINK ANIMATION */
 nav a{
   position: relative;
@@ -237,11 +266,83 @@ nav a.active::after{
   }
 }
 
+@media (max-width: 768px) {
+  .nav-toggle {
+    display: inline-flex;
+    order: 2;
+  }
+  nav {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    order: 4;
+    width: 100%;
+    padding-top: 10px;
+  }
+  .nav-container.nav-open nav {
+    display: flex;
+  }
+  .nav-container .btn {
+    order: 3;
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero-content h1 {
+    font-size: 48px;
+  }
+  .work-hero {
+    height: 70vh;
+  }
+  .projects {
+    padding: 60px 6%;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-hero {
+    height: 60vh;
+  }
+  .hero-content h1 {
+    font-size: 36px;
+  }
+  .hero-content p {
+    font-size: 16px;
+  }
+  .project-grid {
+    gap: 28px;
+  }
+  .project-card img {
+    height: 200px;
+  }
+  .project-card h3 {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 30px;
+  }
+  .projects {
+    padding: 50px 16px;
+  }
+  .project-card img {
+    height: 180px;
+  }
+  footer {
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
 </style>
 <body>
 
 <header class="navbar">
   <div class="nav-container">
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
     <div class="logo">
       🌿 <span>Envirosafe</span>
     </div>
@@ -330,5 +431,25 @@ nav a.active::after{
 <footer>
   <p>© 2025 Envirosafe NGO. All rights reserved.</p>
 </footer>
+<script>
+  const navContainer = document.querySelector(".nav-container");
+  const navToggle = document.querySelector(".nav-toggle");
+  const navLinks = document.querySelectorAll("nav a");
+
+  if (navToggle && navContainer) {
+    navToggle.addEventListener("click", () => {
+      const isOpen = navContainer.classList.toggle("nav-open");
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      navContainer.classList.remove("nav-open");
+      navToggle.setAttribute("aria-expanded", "false");
+    });
+  });
+</script>
+
 </body>
 </html>
