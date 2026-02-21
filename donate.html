@@ -158,6 +158,19 @@ input {
   margin: 20px 0;
 }
 
+/* Errors */
+.error-text {
+  color: #c0392b;
+  font-size: 13px;
+  margin: 6px 0 12px;
+  display: none;
+}
+
+.input-error {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}
+
 /* Button */
 .donate-btn {
   margin-top: 20px;
@@ -675,15 +688,18 @@ nav a.active::after{
         <!-- Inputs -->
         <label>Full Name *</label>
         <input id="donorName"  type="text" placeholder="Enter your full name">
+        <div id="nameError" class="error-text">Enter your name</div>
 
         <label>Email Address *</label>
         <input id="donorEmail" type="email" placeholder="your.email@example.com">
+        <div id="emailError" class="error-text">Enter your email address</div>
 
         <label>Upi Id</label>
         <input id="donorUpiId" type="text" placeholder="example@okaxis etc.">
         
         <label>Phone Number (Optional)</label>
         <input id="donorPhone" type="tel" placeholder="+91 9876543210">
+        <div id="phoneError" class="error-text">Enter your phone number</div>
 
         <button class="donate-btn" id="donateBtn">Donate ₹1000</button>
 
@@ -848,6 +864,46 @@ document.getElementById("donateBtn").addEventListener("click", async () => {
   const name = document.getElementById("donorName").value;
   const email = document.getElementById("donorEmail").value;
   const phone = document.getElementById("donorPhone").value;
+  const nameError = document.getElementById("nameError");
+  const emailError = document.getElementById("emailError");
+  const phoneError = document.getElementById("phoneError");
+
+  let hasError = false;
+
+  const setError = (inputId, errorEl, message) => {
+    const input = document.getElementById(inputId);
+    if (message) {
+      errorEl.textContent = message;
+      errorEl.style.display = "block";
+      input.classList.add("input-error");
+      hasError = true;
+    } else {
+      errorEl.style.display = "none";
+      input.classList.remove("input-error");
+    }
+  };
+
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const digits = phone.trim().replace(/\D/g, "");
+  const phoneOk = digits.length === 10 || (digits.length === 12 && digits.startsWith("91"));
+
+  setError("donorName", nameError, name.trim() ? "" : "Enter your name");
+  setError(
+    "donorEmail",
+    emailError,
+    !email.trim() ? "Enter your email address" : emailOk ? "" : "Enter a valid email address"
+  );
+  setError(
+    "donorPhone",
+    phoneError,
+    !phone.trim()
+      ? "Enter your phone number"
+      : phoneOk
+        ? ""
+        : "Enter a valid 10-digit phone number (with optional +91)"
+  );
+
+  if (hasError) return;
 
   console.log(amount, phone, name, email)
 
